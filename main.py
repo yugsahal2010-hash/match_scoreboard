@@ -5,20 +5,11 @@ from services import calculate_scoreboard
 
 app = FastAPI(title="Khel AI Match Scoreboard API")
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 @app.get("/")
 def home():
     return {"message": "Match Scoreboard API is live", "docs": "/docs", "health": "/health"}
-
-@app.get("/health")
-def health():
-    return {"status": "ok"}
 
 @app.post(
     "/api/match/scoreboard/", 
@@ -27,7 +18,7 @@ def health():
 )
 def compute_scoreboard(input_data: ScoreboardInput):
     try:
-        # Convert Pydantic object to dict and process
-        return calculate_scoreboard(input_data.dict())
+        # Use .model_dump() for Pydantic v2 compatibility
+        return calculate_scoreboard(input_data.model_dump())
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Calculation error: {str(e)}")
