@@ -7,12 +7,19 @@ app = FastAPI(title="Khel AI Match Scoreboard API")
 
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
+
 @app.get("/")
 def home():
     return {"message": "Match Scoreboard API is live", "docs": "/docs", "health": "/health"}
 
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
 @app.post(
-    "/api/match/scoreboard/", 
+    "/api/match/scoreboard/",
     response_model=MatchScoreboardResponse,
     responses={422: {"model": ErrorResponse}, 500: {"model": ErrorResponse}}
 )
