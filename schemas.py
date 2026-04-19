@@ -44,4 +44,3 @@ class MatchScoreboardResponse(BaseModel):
 
 class ErrorResponse(BaseModel):
     detail: str
-    
