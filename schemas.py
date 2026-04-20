@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import List, Optional
 
 
@@ -16,30 +16,32 @@ class TopBowler(BaseModel):
 class ScoreboardInput(BaseModel):
     match: str
     venue: str
-    innings_number: int
-    batting_team: str
-    bowling_team: str
-    score: int
-    wickets: int
-    overs: str
+    innings_started: bool = True        # False = match exists but no innings yet
+    innings_number: Optional[int] = None
+    batting_team: Optional[str] = None
+    bowling_team: Optional[str] = None
+    score: Optional[int] = None
+    wickets: Optional[int] = None
+    overs: Optional[str] = None
     top_batter: Optional[TopBatter] = None
     top_bowler: Optional[TopBowler] = None
-    recent_balls: List[str]
+    recent_balls: List[str] = []
 
 
 class MatchScoreboardResponse(BaseModel):
     match: str
     venue: str
-    innings_number: int
-    batting_team: str
-    bowling_team: str
-    score: int
-    wickets: int
-    overs: str
-    run_rate: float
+    innings_number: Optional[int]
+    batting_team: Optional[str]
+    bowling_team: Optional[str]
+    score: Optional[int]
+    wickets: Optional[int]
+    overs: Optional[str]
+    run_rate: Optional[float]
     top_batter: Optional[TopBatter]
     top_bowler: Optional[TopBowler]
     recent_balls: List[str]
+    status: str
 
 
 class ErrorResponse(BaseModel):
