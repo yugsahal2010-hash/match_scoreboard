@@ -25,7 +25,6 @@ def health():
 )
 def compute_scoreboard(input_data: ScoreboardInput):
     try:
-        # Use .model_dump() for Pydantic v2 compatibility
         return calculate_scoreboard(input_data.model_dump())
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Calculation error: {str(e)}")
